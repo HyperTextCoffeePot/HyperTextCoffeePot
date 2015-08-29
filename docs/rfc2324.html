@@ -1,0 +1,752 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://dublincore.org/documents/2008/08/04/dc-html/">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="creator" content="rfcmarkup version 1.115" />
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+<meta name="DC.Identifier" content="urn:ietf:rfc:2324" />
+<meta name="DC.Description.Abstract" content="This document describes HTCPCP, a protocol for controlling,
+monitoring, and diagnosing coffee pots. This memo provides information
+for the Internet community. It does not specify an Internet standard
+of any kind." />
+<meta name="DC.Creator" content="L. Masinter" />
+<meta name="DC.Date.Issued" content="April, 1998" />
+<meta name="DC.Title" content="Hyper Text Coffee Pot Control Protocol (HTCPCP/1.0)" />
+
+    <link rel="icon" href="/images/rfc.png" type="image/png" />
+    <link rel="shortcut icon" href="/images/rfc.png" type="image/png" />
+    <title>RFC 2324 - Hyper Text Coffee Pot Control Protocol (HTCPCP/1.0)</title>
+    
+    
+    <style type="text/css">
+	@media only screen 
+	  and (min-width: 992px)
+	  and (max-width: 1199px) {
+	    body { font-size: 14pt; }
+            div.content { width: 96ex; margin: 0 auto; }
+        }
+	@media only screen 
+	  and (min-width: 768px)
+	  and (max-width: 991px) {
+            body { font-size: 14pt; }
+            div.content { width: 96ex; margin: 0 auto; }
+        }
+	@media only screen 
+	  and (min-width: 480px)
+	  and (max-width: 767px) {
+            body { font-size: 11pt; }
+            div.content { width: 96ex; margin: 0 auto; }
+        }
+	@media only screen 
+	  and (max-width: 479px) {
+            body { font-size: 8pt; }
+            div.content { width: 96ex; margin: 0 auto; }
+        }
+	@media only screen 
+	  and (min-device-width : 375px) 
+	  and (max-device-width : 667px) {
+            body { font-size: 9.5pt; }
+            div.content { width: 96ex; margin: 0 1px; }
+        }
+	@media only screen 
+	  and (min-device-width: 1200px) {
+            body { font-size: 10pt; margin: 0 4em; }
+            div.content { width: 96ex; margin: 0; }
+        }
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	    font-weight: bold;
+            line-height: 0pt;
+            display: inline;
+            white-space: pre;
+            font-family: monospace;
+            font-size: 1em;
+	    font-weight: bold;
+        }
+        pre {
+            font-size: 1em;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+	.pre {
+	    white-space: pre;
+	    font-family: monospace;
+	}
+	.header{
+	    font-weight: bold;
+	}
+        .newpage {
+            page-break-before: always;
+        }
+        .invisible {
+            text-decoration: none;
+            color: white;
+        }
+        a.selflink {
+          color: black;
+          text-decoration: none;
+        }
+        @media print {
+            body {
+                font-family: monospace;
+                font-size: 10.5pt;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                font-size: 1em;
+            }
+        
+            a:link, a:visited {
+                color: inherit;
+                text-decoration: none;
+            }
+            .noprint {
+                display: none;
+            }
+        }
+	@media screen {
+	    .grey, .grey a:link, .grey a:visited {
+		color: #777;
+	    }
+            .docinfo {
+                background-color: #EEE;
+            }
+            .top {
+                border-top: 7px solid #EEE;
+            }
+            .bgwhite  { background-color: white; }
+            .bgred    { background-color: #F44; }
+            .bggrey   { background-color: #666; }
+            .bgbrown  { background-color: #840; }            
+            .bgorange { background-color: #FA0; }
+            .bgyellow { background-color: #EE0; }
+            .bgmagenta{ background-color: #F4F; }
+            .bgblue   { background-color: #66F; }
+            .bgcyan   { background-color: #4DD; }
+            .bggreen  { background-color: #4F4; }
+
+            .legend   { font-size: 90%; }
+            .cplate   { font-size: 70%; border: solid grey 1px; }
+	}
+    </style>
+    <!--[if IE]>
+    <style>
+    body {
+       font-size: 13px;
+       margin: 10px 10px;
+    }
+    </style>
+    <![endif]-->
+
+    <script type="text/javascript"><!--
+    function addHeaderTags() {
+	var spans = document.getElementsByTagName("span");
+	for (var i=0; i < spans.length; i++) {
+	    var elem = spans[i];
+	    if (elem) {
+		var level = elem.getAttribute("class");
+                if (level == "h1" || level == "h2" || level == "h3" || level == "h4" || level == "h5" || level == "h6") {
+                    elem.innerHTML = "<"+level+">"+elem.innerHTML+"</"+level+">";		
+                }
+	    }
+	}
+    }
+    var legend_html = "Colour legend:<br />      <table>         <tr><td>Unknown:</td>                   <td><span class='cplate bgwhite'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Draft:</td>                     <td><span class='cplate bgred'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Informational:</td>             <td><span class='cplate bgorange'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Experimental:</td>              <td><span class='cplate bgyellow'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Best Common Practice:</td>      <td><span class='cplate bgmagenta'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Proposed Standard:</td>         <td><span class='cplate bgblue'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Draft Standard (old designation):</td> <td><span class='cplate bgcyan'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Internet Standard:</td>         <td><span class='cplate bggreen'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Historic:</td>                  <td><span class='cplate bggrey'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>         <tr><td>Obsolete:</td>                  <td><span class='cplate bgbrown'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>     </table>";
+    function showElem(id) {
+        var elem = document.getElementById(id);
+        elem.innerHTML = eval(id+"_html");
+        elem.style.visibility='visible';
+    }
+    function hideElem(id) {
+        var elem = document.getElementById(id);
+        elem.style.visibility='hidden';        
+        elem.innerHTML = "";
+    }
+    // -->
+    </script>
+</head>
+<body onload="addHeaderTags()">
+  <div class="content">
+   <div style="height: 13px;">
+      <div onmouseover="this.style.cursor='pointer';"
+         onclick="showElem('legend');"
+         onmouseout="hideElem('legend')"
+	 style="height: 6px; position: absolute;"
+         class="pre noprint docinfo bgorange"
+         title="Click for colour legend." >                                                                        </div>
+      <div id="legend"
+           class="docinfo noprint pre legend"
+           style="position:absolute; top: 4px; left: 4ex; visibility:hidden; background-color: white; padding: 4px 9px 5px 7px; border: solid #345 1px; "
+           onmouseover="showElem('legend');"
+           onmouseout="hideElem('legend');">
+      </div>
+   </div>
+<span class="pre noprint docinfo top">[<a href="../html/" title="Document search and retrieval page">Docs</a>] [<a href="/rfc/rfc2324.txt" title="Plaintext version of this document">txt</a>|<a href="/pdf/rfc2324" title="PDF version of this document">pdf</a>] [<a href="https://www.rfc-editor.org/errata_search.php?rfc=2324">Errata</a>]                                               </span><br />
+<span class="pre noprint docinfo">                                                                        </span><br />
+<span class="pre noprint docinfo">Updated by: <a href="./rfc7168">7168</a>                                           INFORMATIONAL</span><br />
+<span class="pre noprint docinfo">                                                            <span style='color: #C00;'>Errata Exist</span></span><br />
+<pre>
+Network Working Group                                       L. Masinter
+Request for Comments: 2324                                 1 April 1998
+Category: Informational
+
+
+          <span class="h1">Hyper Text Coffee Pot Control Protocol (HTCPCP/1.0)</span>
+
+Status of this Memo
+
+   This memo provides information for the Internet community.  It does
+   not specify an Internet standard of any kind.  Distribution of this
+   memo is unlimited.
+
+Copyright Notice
+
+   Copyright (C) The Internet Society (1998).  All Rights Reserved.
+
+Abstract
+
+   This document describes HTCPCP, a protocol for controlling,
+   monitoring, and diagnosing coffee pots.
+
+<span class="h2"><a class="selflink" name="section-1" href="#section-1">1</a>. Rationale and Scope</span>
+
+   There is coffee all over the world. Increasingly, in a world in which
+   computing is ubiquitous, the computists want to make coffee. Coffee
+   brewing is an art, but the distributed intelligence of the web-
+   connected world transcends art.  Thus, there is a strong, dark, rich
+   requirement for a protocol designed espressoly for the brewing of
+   coffee. Coffee is brewed using coffee pots.  Networked coffee pots
+   require a control protocol if they are to be controlled.
+
+   Increasingly, home and consumer devices are being connected to the
+   Internet. Early networking experiments demonstrated vending devices
+   connected to the Internet for status monitoring [<a href="#ref-COKE" title="&quot;Coke machine history&quot;">COKE</a>]. One of the
+   first remotely _operated_ machine to be hooked up to the Internet,
+   the Internet Toaster, (controlled via SNMP) was debuted in 1990
+   [<a href="./rfc2235" title="&quot;Hobbes' Internet Timeline&quot;">RFC2235</a>].
+
+   The demand for ubiquitous appliance connectivity that is causing the
+   consumption of the IPv4 address space. Consumers want remote control
+   of devices such as coffee pots so that they may wake up to freshly
+   brewed coffee, or cause coffee to be prepared at a precise time after
+   the completion of dinner preparations.
+
+
+
+
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 1]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-2" id="page-2" href="#page-2" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+   This document specifies a Hyper Text Coffee Pot Control Protocol
+   (HTCPCP), which permits the full request and responses necessary to
+   control all devices capable of making the popular caffeinated hot
+   beverages.
+
+   HTTP 1.1 ([<a href="./rfc2068" title="&quot;Hypertext Transfer Protocol -- HTTP/1.1&quot;">RFC2068</a>]) permits the transfer of web objects from origin
+   servers to clients. The web is world-wide.  HTCPCP is based on HTTP.
+   This is because HTTP is everywhere. It could not be so pervasive
+   without being good. Therefore, HTTP is good. If you want good coffee,
+   HTCPCP needs to be good. To make HTCPCP good, it is good to base
+   HTCPCP on HTTP.
+
+   Future versions of this protocol may include extensions for espresso
+   machines and similar devices.
+
+<span class="h2"><a class="selflink" name="section-2" href="#section-2">2</a>. HTCPCP Protocol</span>
+
+   The HTCPCP protocol is built on top of HTTP, with the addition of a
+   few new methods, header fields and return codes.  All HTCPCP servers
+   should be referred to with the "coffee:" URI scheme (<a href="#section-4">Section 4</a>).
+
+<span class="h3"><a class="selflink" name="section-2.1" href="#section-2.1">2.1</a> HTCPCP Added Methods</span>
+
+<span class="h4"><a class="selflink" name="section-2.1.1" href="#section-2.1.1">2.1.1</a> The BREW method, and the use of POST</span>
+
+   Commands to control a coffee pot are sent from client to coffee
+   server using either the BREW or POST method, and a message body with
+   Content-Type set to "application/coffee-pot-command".
+
+   A coffee pot server MUST accept both the BREW and POST method
+   equivalently.  However, the use of POST for causing actions to happen
+   is deprecated.
+
+   Coffee pots heat water using electronic mechanisms, so there is no
+   fire. Thus, no firewalls are necessary, and firewall control policy
+   is irrelevant. However, POST may be a trademark for coffee, and so
+   the BREW method has been added. The BREW method may be used with
+   other HTTP-based protocols (e.g., the Hyper Text Brewery Control
+   Protocol).
+
+<span class="h4"><a class="selflink" name="section-2.1.2" href="#section-2.1.2">2.1.2</a> GET method</span>
+
+   In HTTP, the GET method is used to mean "retrieve whatever
+   information (in the form of an entity) identified by the Request-
+   URI." If the Request-URI refers to a data-producing process, it is
+   the produced data which shall be returned as the entity in the
+   response and not the source text of the process, unless that text
+   happens to be the output of the process.
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 2]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-3" id="page-3" href="#page-3" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+   In HTCPCP, the resources associated with a coffee pot are physical,
+   and not information resources. The "data" for most coffee URIs
+   contain no caffeine.
+
+<span class="h4"><a class="selflink" name="section-2.1.3" href="#section-2.1.3">2.1.3</a> PROPFIND method</span>
+
+   If a cup of coffee is data, metadata about the brewed resource is
+   discovered using the PROPFIND method [WEBDAV].
+
+<span class="h4"><a class="selflink" name="section-2.1.4" href="#section-2.1.4">2.1.4</a> WHEN method</span>
+
+   When coffee is poured, and milk is offered, it is necessary for the
+   holder of the recipient of milk to say "when" at the time when
+   sufficient milk has been introduced into the coffee. For this
+   purpose, the "WHEN" method has been added to HTCPCP. Enough? Say
+   WHEN.
+
+<span class="h3"><a class="selflink" name="section-2.2" href="#section-2.2">2.2</a> Coffee Pot Header fields</span>
+
+   HTCPCP recommends several HTTP header fields and defines some new
+   ones.
+
+<span class="h4"><a class="selflink" name="section-2.2.1" href="#section-2.2.1">2.2.1</a> Recommended header fields</span>
+
+<span class="h5"><a class="selflink" name="section-2.2.1.1" href="#section-2.2.1.1">2.2.1.1</a> The "safe" response header field.</span>
+
+   [<a name="ref-SAFE" id="ref-SAFE">SAFE</a>] defines a HTTP response header field, "Safe", which can be
+   used to indicate that repeating a HTTP request is safe. The inclusion
+   of a "Safe: Yes" header field allows a client to repeat a previous
+   request if the result of the request might be repeated.
+
+   The actual safety of devices for brewing coffee varies widely, and
+   may depend, in fact, on conditions in the client rather than just in
+   the server. Thus, this protocol includes an extension to the "Safe"
+   response header:
+
+          Safe                = "Safe" ":" safe-nature
+          safe-nature         = "yes" | "no" | conditionally-safe
+          conditionally-safe  = "if-" safe-condition
+          safe-condition      = "user-awake" | token
+
+   indication will allow user agents to handle retries of some safe
+   requests, in particular safe POST requests, in a more user-friendly
+   way.
+
+
+
+
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 3]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-4" id="page-4" href="#page-4" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+<span class="h4"><a class="selflink" name="section-2.2.2" href="#section-2.2.2">2.2.2</a> New header fields</span>
+
+<span class="h5"><a class="selflink" name="section-2.2.2.1" href="#section-2.2.2.1">2.2.2.1</a> The Accept-Additions header field</span>
+
+   In HTTP, the "Accept" request-header field is used to specify media
+   types which are acceptable for the response. However, in HTCPCP, the
+   response may result in additional actions on the part of the
+   automated pot. For this reason, HTCPCP adds a new header field,
+   "Accept-Additions":
+
+
+       Accept-Additions = "Accept-Additions" ":"
+                          #( addition-range [ accept-params ] )
+
+        addition-type   = ( "*"
+                          | milk-type
+                          | syrup-type
+                          | sweetener-type
+                          | spice-type
+                          | alcohol-type
+                          ) *( ";" parameter )
+        milk-type       = ( "Cream" | "Half-and-half" | "Whole-milk"
+                          | "Part-Skim" | "Skim" | "Non-Dairy" )
+        syrup-type      = ( "Vanilla" | "Almond" | "Raspberry"
+                          | "Chocolate" )
+        alcohol-type    = ( "Whisky" | "Rum" | "Kahlua" | "Aquavit" )
+
+<span class="h4"><a class="selflink" name="section-2.2.3" href="#section-2.2.3">2.2.3</a> Omitted Header Fields</span>
+
+   No options were given for decaffeinated coffee. What's the point?
+
+<span class="h3"><a class="selflink" name="section-2.3" href="#section-2.3">2.3</a> HTCPCP return codes</span>
+
+   Normal HTTP return codes are used to indicate difficulties of the
+   HTCPCP server. This section identifies special interpretations and
+   new return codes.
+
+<span class="h4"><a class="selflink" name="section-2.3.1" href="#section-2.3.1">2.3.1</a> 406 Not Acceptable</span>
+
+   This return code is normally interpreted as "The resource identified
+   by the request is only capable of generating response entities which
+   have content characteristics not acceptable according to the accept
+   headers sent in the request. In HTCPCP, this response code MAY be
+   returned if the operator of the coffee pot cannot comply with the
+   Accept-Addition request. Unless the request was a HEAD request, the
+   response SHOULD include an entity containing a list of available
+   coffee additions.
+
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 4]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-5" id="page-5" href="#page-5" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+   In practice, most automated coffee pots cannot currently provide
+   additions.
+
+<span class="h4"><a class="selflink" name="section-2.3.2" href="#section-2.3.2">2.3.2</a> 418 I'm a teapot</span>
+
+   Any attempt to brew coffee with a teapot should result in the error
+   code "418 I'm a teapot". The resulting entity body MAY be short and
+   stout.
+
+<span class="h2"><a class="selflink" name="section-3" href="#section-3">3</a>. The "coffee" URI scheme</span>
+
+   Because coffee is international, there are international coffee URI
+   schemes.  All coffee URL schemes are written with URL encoding of the
+   UTF-8 encoding of the characters that spell the word for "coffee" in
+   any of 29 languages, following the conventions for
+   internationalization in URIs [<a href="#ref-URLI18N" title="&quot;Using UTF8 for non-ASCII Characters in Extended URIs&quot;">URLI18N</a>].
+
+coffee-url  =  coffee-scheme ":" [ "//" host ]
+                ["/" pot-designator ] ["?" additions-list ]
+
+coffee-scheme = ( "koffie"                      ; Afrikaans, Dutch
+                  | "q%C3%A6hv%C3%A6"          ; Azerbaijani
+                  | "%D9%82%D9%87%D9%88%D8%A9" ; Arabic
+               | "akeita"                   ; Basque
+               | "koffee"                   ; Bengali
+               | "kahva"                    ; Bosnian
+               | "kafe"                     ; Bulgarian, Czech
+               | "caf%C3%E8"                ; Catalan, French, Galician
+                  | "%E5%92%96%E5%95%A1"       ; Chinese
+                  | "kava"                     ; Croatian
+               | "k%C3%A1va                 ; Czech
+               | "kaffe"                    ; Danish, Norwegian, Swedish
+               | "coffee"                   ; English
+               | "kafo"                     ; Esperanto
+                  | "kohv"                     ; Estonian
+               | "kahvi"                    ; Finnish
+               | "%4Baffee"                 ; German
+               | "%CE%BA%CE%B1%CF%86%CE%AD" ; Greek
+               | "%E0%A4%95%E0%A5%8C%E0%A4%AB%E0%A5%80" ; Hindi
+               | "%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC" ; Japanese
+               | "%EC%BB%A4%ED%94%BC"       ; Korean
+               | "%D0%BA%D0%BE%D1%84%D0%B5" ; Russian
+               | "%E0%B8%81%E0%B8%B2%E0%B9%81%E0%B8%9F" ; Thai
+               )
+
+   pot-designator = "pot-" integer  ; for machines with multiple pots
+   additions-list = #( addition )
+
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 5]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-6" id="page-6" href="#page-6" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+   All alternative coffee-scheme forms are equivalent.  However, the use
+   of coffee-scheme in various languages MAY be interpreted as an
+   indication of the kind of coffee produced by the coffee pot.  Note
+   that while URL scheme names are case-independent, capitalization is
+   important for German and thus the initial "K" must be encoded.
+
+<span class="h2"><a class="selflink" name="section-4" href="#section-4">4</a>. The "message/coffeepot" media type</span>
+
+   The entity body of a POST or BREW request MUST be of Content-Type
+   "message/coffeepot". Since most of the information for controlling
+   the coffee pot is conveyed by the additional headers, the content of
+   "message/coffeepot" contains only a coffee-message-body:
+
+   coffee-message-body = "start" | "stop"
+
+<span class="h2"><a class="selflink" name="section-5" href="#section-5">5</a>. Operational constraints</span>
+
+   This section lays out some of the operational issues with deployment
+   of HTCPCP ubiquitously.
+
+<span class="h3"><a class="selflink" name="section-5.1" href="#section-5.1">5.1</a> Timing Considerations</span>
+
+   A robust quality of service is required between the coffee pot user
+   and the coffee pot service.  Coffee pots SHOULD use the Network Time
+   Protocol [<a href="#ref-NTP" title="&quot;Network Time Protocol (Version 3) Specification, Implementation and Analysis&quot;">NTP</a>] to synchronize their clocks to a globally accurate
+   time standard.
+
+   Telerobotics has been an expensive technology. However, with the
+   advent of the Cambridge Coffee Pot [<a href="#ref-CAM" title="&quot;The Trojan Room Coffee Machine&quot;">CAM</a>], the use of the web (rather
+   than SNMP) for remote system monitoring and management has been
+   proven.  Additional coffee pot maintenance tasks might be
+   accomplished by remote robotics.
+
+   Web data is normally static. Therefore to save data transmission and
+   time, Web browser programs store each Web page retrieved by a user on
+   the user's computer. Thus, if the user wants to return to that page,
+   it is now stored locally and does not need to be requested again from
+   the server. An image used for robot control or for monitoring a
+   changing scene is dynamic. A fresh version needs to be retrieved from
+   the server each time it is accessed.
+
+<span class="h3"><a class="selflink" name="section-5.2" href="#section-5.2">5.2</a> Crossing firewalls</span>
+
+   In most organizations HTTP traffic crosses firewalls fairly easily.
+   Modern coffee pots do not use fire. However, a "firewall" is useful
+   for protection of any source from any manner of heat, and not just
+   fire. Every home computer network SHOULD be protected by a firewall
+   from sources of heat. However, remote control of coffee pots is
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 6]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-7" id="page-7" href="#page-7" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+   important from outside the home. Thus, it is important that HTCPCP
+   cross firewalls easily.
+
+   By basing HTCPCP on HTTP and using port 80, it will get all of HTTP's
+   firewall-crossing virtues. Of course, the home firewalls will require
+   reconfiguration or new versions in order to accommodate HTCPCP-
+   specific methods, headers and trailers, but such upgrades will be
+   easily accommodated. Most home network system administrators drink
+   coffee, and are willing to accommodate the needs of tunnelling
+   HTCPCP.
+
+<span class="h2"><a class="selflink" name="section-6" href="#section-6">6</a>. System management considerations</span>
+
+   Coffee pot monitoring using HTTP protocols has been an early
+   application of the web.  In the earliest instance, coffee pot
+   monitoring was an early (and appropriate) use of ATM networks [<a href="#ref-CAM" title="&quot;The Trojan Room Coffee Machine&quot;">CAM</a>].
+
+   The traditional technique [<a href="#ref-CAM" title="&quot;The Trojan Room Coffee Machine&quot;">CAM</a>] was to attach a frame-grabber to a
+   video camera, and feed the images to a web server. This was an
+   appropriate application of ATM networks. In this coffee pot
+   installation, the Trojan Room of Cambridge University laboratories
+   was used to give a web interface to monitor a common coffee pot.  of
+   us involved in related research and, being poor, impoverished
+   academics, we only had one coffee filter machine between us, which
+   lived in the corridor just outside the Trojan Room. However, being
+   highly dedicated and hard-working academics, we got through a lot of
+   coffee, and when a fresh pot was brewed, it often didn't last long.
+
+   This service was created as the first application to use a new RPC
+   mechanism designed in the Cambridge Computer Laboratory - MSRPC2. It
+   runs over MSNL (Multi-Service Network Layer) - a network layer
+   protocol designed for ATM networks.
+
+   Coffee pots on the Internet may be managed using the Coffee Pot MIB
+   [<a href="#ref-CPMIB" title="&quot;Definitions of Managed Objects for Drip-Type Heated Beverage Hardware Devices using SMIv2&quot;">CPMIB</a>].
+
+<span class="h2"><a class="selflink" name="section-7" href="#section-7">7</a>. Security Considerations</span>
+
+   Anyone who gets in between me and my morning coffee should be
+   insecure.
+
+   Unmoderated access to unprotected coffee pots from Internet users
+   might lead to several kinds of "denial of coffee service" attacks.
+   The improper use of filtration devices might admit trojan grounds.
+   Filtration is not a good virus protection method.
+
+
+
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 7]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-8" id="page-8" href="#page-8" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+   Putting coffee grounds into Internet plumbing may result in clogged
+   plumbing, which would entail the services of an Internet Plumber
+   [<a href="#ref-PLUMB" title="&quot;Internet Plumber of the Year: Jim Gettys&quot;">PLUMB</a>], who would, in turn, require an Internet Plumber's Helper.
+
+   Access authentication will be discussed in a separate memo.
+
+<span class="h2"><a class="selflink" name="section-8" href="#section-8">8</a>. Acknowledgements</span>
+
+   Many thanks to the many contributors to this standard, including Roy
+   Fielding, Mark Day, Keith Moore, Carl Uno-Manros, Michael Slavitch,
+   and Martin Duerst.  The inspiration of the Prancing Pony, the CMU
+   Coke Machine, the Cambridge Coffee Pot, the Internet Toaster, and
+   other computer controlled remote devices have led to this valuable
+   creation.
+
+<span class="h2"><a class="selflink" name="section-9" href="#section-9">9</a>. References</span>
+
+   [<a name="ref-RFC2068" id="ref-RFC2068">RFC2068</a>] Fielding, R., Gettys, J., Mogul, J., Frystyk, H., and T.
+   Berners-Lee, "Hypertext Transfer Protocol -- HTTP/1.1", <a href="./rfc2068">RFC 2068</a>,
+   January 1997.
+
+   [<a name="ref-RFC2186" id="ref-RFC2186">RFC2186</a>] Wessels, D., and K. Claffy, "Internet Cache Protocol (ICP),
+   version 2," <a href="./rfc2186">RFC 2186</a>, September 1997
+
+   [<a name="ref-CPMIB" id="ref-CPMIB">CPMIB</a>] Slavitch, M., "Definitions of Managed Objects for Drip-Type
+   Heated Beverage Hardware Devices using SMIv2", <a href="./rfc2325">RFC 2325</a>, 1 April
+   1998.
+
+   [<a name="ref-HTSVMP" id="ref-HTSVMP">HTSVMP</a>] Q. Stafford-Fraser, "Hyper Text Sandwich Van Monitoring
+   Protocol, Version 3.2". In preparation.
+
+   [<a name="ref-RFC2295" id="ref-RFC2295">RFC2295</a>] Holtman, K., and A. Mutz, "Transparent Content Negotiation
+   in HTTP", <a href="./rfc2295">RFC 2295</a>, March 1998.
+
+   [<a name="ref-SAFE" id="ref-SAFE">SAFE</a>] K. Holtman. "The Safe Response Header Field", September 1997.
+
+   [<a name="ref-CAM" id="ref-CAM">CAM</a>] "The Trojan Room Coffee Machine", D. Gordon and M. Johnson,
+   University of Cambridge Computer Lab,
+   &lt;<a href="http://www.cl.cam.ac.uk/coffee/coffee.html">http://www.cl.cam.ac.uk/coffee/coffee.html</a>&gt;
+
+   [<a name="ref-CBIO" id="ref-CBIO">CBIO</a>] "The Trojan Room Coffee Pot, a (non-technical) biography", Q.
+   Stafford-Fraser, University of Cambridge Computer Lab,
+   &lt;<a href="http://www.cl.cam.ac.uk/coffee/qsf/coffee.html">http://www.cl.cam.ac.uk/coffee/qsf/coffee.html</a>&gt;.
+
+   [<a name="ref-RFC2235" id="ref-RFC2235">RFC2235</a>] Zakon, R., "Hobbes' Internet Timeline", FYI 32, <a href="./rfc2230">RFC 2230</a>,
+   November 1997.  See also
+   &lt;<a href="http://www.internode.com.au/images/toaster2.jpg">http://www.internode.com.au/images/toaster2.jpg</a>&gt;
+
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 8]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-9" id="page-9" href="#page-9" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+   [<a name="ref-NTP" id="ref-NTP">NTP</a>] Mills, D., "Network Time Protocol (Version 3) Specification,
+   Implementation and Analysis", <a href="./rfc1305">RFC 1305</a>, March 1992.
+
+   [<a name="ref-URLI18N" id="ref-URLI18N">URLI18N</a>] Masinter, L., "Using UTF8 for non-ASCII Characters in
+   Extended URIs" Work in Progress.
+
+   [<a name="ref-PLUMB" id="ref-PLUMB">PLUMB</a>] B. Metcalfe, "Internet Plumber of the Year: Jim Gettys",
+   Infoworld, February 2, 1998.
+
+   [<a name="ref-COKE" id="ref-COKE">COKE</a>] D. Nichols, "Coke machine history", C. Everhart, "Interesting
+   uses of networking", &lt;<a href="http://www-cse.ucsd.edu/users/bsy/coke.history.txt">http://www-</a>
+   <a href="http://www-cse.ucsd.edu/users/bsy/coke.history.txt">cse.ucsd.edu/users/bsy/coke.history.txt</a>&gt;.
+
+<span class="h2"><a class="selflink" name="section-10" href="#section-10">10</a>. Author's Address</span>
+
+   Larry Masinter
+   Xerox Palo Alto Research Center
+   3333 Coyote Hill Road
+   Palo Alto, CA 94304
+
+   EMail: masinter@parc.xerox.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="grey">Masinter                     Informational                      [Page 9]</span></pre>
+<hr class='noprint' style='width: 96ex;' align='left'/><!--NewPage--><pre class='newpage'><a name="page-10" id="page-10" href="#page-10" class="invisible"> </a>
+<span class="grey"><a href="./rfc2324">RFC 2324</a>                       HTCPCP/1.0                   1 April 1998</span>
+
+
+<span class="h2"><a class="selflink" name="section-11" href="#section-11">11</a>.  Full Copyright Statement</span>
+
+   Copyright (C) The Internet Society (1998).  All Rights Reserved.
+
+   This document and translations of it may be copied and furnished to
+   others, and derivative works that comment on or otherwise explain it
+   or assist in its implementation may be prepared, copied, published
+   and distributed, in whole or in part, without restriction of any
+   kind, provided that the above copyright notice and this paragraph are
+   included on all such copies and derivative works.  However, this
+   document itself may not be modified in any way, such as by removing
+   the copyright notice or references to the Internet Society or other
+   Internet organizations, except as needed for the purpose of
+   developing Internet standards in which case the procedures for
+   copyrights defined in the Internet Standards process must be
+   followed, or as required to translate it into languages other than
+   English.
+
+   The limited permissions granted above are perpetual and will not be
+   revoked by the Internet Society or its successors or assigns.
+
+   This document and the information contained herein is provided on an
+   "AS IS" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING
+   TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+   BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
+   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Masinter                     Informational                     [Page 10]
+
+</pre><br />
+    <span class="noprint"><small><small>Html markup produced by rfcmarkup 1.115, available from
+      <a href="https://tools.ietf.org/tools/rfcmarkup/">https://tools.ietf.org/tools/rfcmarkup/</a>
+    </small></small></span>
+  </div>
+</body>
+</html>
