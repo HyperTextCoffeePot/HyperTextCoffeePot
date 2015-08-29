@@ -16,8 +16,6 @@ class Pot(object):
         return are_you_a_teapot()
 
 
-
-
 def are_you_a_teapot():
     return 'I am a teapot.\n', 418
 
