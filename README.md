@@ -35,7 +35,9 @@ Installation instructions were stolen from this writeup: [GPIO Library][2]
 
 2. Unarchive the tar ball ($ tar zxf RPi.GPIO-0.1.0.tar.gz)
 3. Install GPIO Library
+
     a. $ cd RPi.GPIO-0.1.0
+    
     b. $ sudo python setup.py install
 
 [2]: http://openmicros.org/index.php/articles/94-ciseco-product-documentation/raspberry-pi/217-getting-started-with-raspberry-pi-gpio-and-python
