@@ -13,6 +13,16 @@ The goal of this project is to implement a complient HTCPCP server after the
 
 [1]: https://en.wikipedia.org/wiki/HTCPCP
 
+Design
+------
+
+The overall design will involve a Flask server that communicates with a
+`coffeed` daemon that actually controls the coffee/tea pot. Therefore, the Flask app should return responses immediately.
+
+Design of the Flask app (at time or writing) is nearly complete and trivially
+implemented. Implementation of the `coffeed` daemon is in the brainstorming
+phase. Please checkout the issues for more information.
+
 What to help?
 -------------
 
