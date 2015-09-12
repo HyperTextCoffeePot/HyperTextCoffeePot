@@ -23,6 +23,20 @@ Design of the Flask app (at time or writing) is nearly complete and trivially
 implemented. Implementation of the `coffeed` daemon is in the brainstorming
 phase. Please checkout the issues for more information.
 
+GPIO Library (RPi.GPIO)
+-----
+
+#### Installation
+Installation instructions were stolen from this writeup: [GPIO Library][2]
+
+1) Download the library ($ wget http://pypi.python.org/packages/source/R/RPi.GPIO/RPi.GPIO-0.1.0.tar.gz)
+2) Unarchive the tar ball ($ tar zxf RPi.GPIO-0.1.0.tar.gz)
+3) Install GPIO Library
+  a) $ cd RPi.GPIO-0.1.0
+  b) $ sudo python setup.py install
+
+[2]: http://openmicros.org/index.php/articles/94-ciseco-product-documentation/raspberry-pi/217-getting-started-with-raspberry-pi-gpio-and-python
+
 What to help?
 -------------
 
