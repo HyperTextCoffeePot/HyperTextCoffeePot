@@ -1,10 +1,10 @@
 from flask import Flask
 
-from pot import Pot
+import pots
 
 
 app = Flask(__name__)
-pot = Pot('teapot')
+pot = pots.RaspCoffeePot('coffee', 10, 24)
 
 
 @app.route('/teapot', methods=['GET'])
