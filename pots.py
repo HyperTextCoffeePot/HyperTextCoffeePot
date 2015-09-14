@@ -35,7 +35,7 @@ class RaspCoffeePot(Pot):
         self.brew_time = brew_time
 
     def brew(self):
-        if flask.request.data.strip() == 'stop':
+        if flask.request.get_data().strip() == 'stop':
             return self.brew_stop()
         else:
             return self.brew_start()
@@ -44,14 +44,16 @@ class RaspCoffeePot(Pot):
         if self.busy:
             flask.abort(409)
         self.busy = True
-        trollius.get_event_loop().call_later(self.brew_time, self.brew_stop())
+        trollius.get_event_loop().call_later(self.brew_time, self.brew_stop)
         wiringpi2.digitalWrite(self.gpio_pin, 1)
+        return 'started brewing', 200
 
     def brew_stop(self):
         if not self.busy:
             flask.abort(409)
         self.busy = False
         wiringpi2.digitalWrite(self.gpio_pin, 0)
+        return 'stopped brewing', 200
 
 
 def are_you_a_teapot():
