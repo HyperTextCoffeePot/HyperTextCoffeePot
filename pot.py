@@ -1,4 +1,5 @@
-""" A sample coffee or tea pot. """
+""" Coffee and teapots. """
+import flask
 
 
 class Pot(object):
@@ -17,10 +18,4 @@ class Pot(object):
 
 
 def are_you_a_teapot():
-    return 'I am a teapot.\n', 418
-
-
-
-
-
-
+    flask.abort(418)
