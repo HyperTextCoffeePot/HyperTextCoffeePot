@@ -2,7 +2,7 @@
 import subprocess
 
 import flask
-import trollius
+import gevent
 import wiringpi2
 
 
@@ -44,11 +44,12 @@ class RaspCoffeePot(Pot):
         if self.busy:
             flask.abort(409)
         self.busy = True
-        trollius.get_event_loop().call_later(self.brew_time, self.brew_stop)
+        gevent.spawn(self.brew_stop, self.brew_time)
         wiringpi2.digitalWrite(self.gpio_pin, 1)
         return 'started brewing', 200
 
-    def brew_stop(self):
+    def brew_stop(self, wait=0):
+        gevent.sleep(wait)
         if not self.busy:
             flask.abort(409)
         self.busy = False
