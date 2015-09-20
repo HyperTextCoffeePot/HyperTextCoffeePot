@@ -1,9 +1,13 @@
 """ Coffee and teapots. """
+import logging
 import subprocess
+import warnings
 
 import flask
 import gevent
 import wiringpi2
+
+logger = logging.getLogger()
 
 
 class Pot(object):
@@ -29,8 +33,13 @@ class RaspCoffeePot(Pot):
     def __init__(self, name, brew_time, pin):
         super(RaspCoffeePot, self).__init__(name)
         self.gpio_pin = pin
-        subprocess.check_call('gpio export {} out'.format(self.gpio_pin).split())
-        wiringpi2.wiringPiSetupSys()
+        try:
+            subprocess.check_call('gpio export {} out'.format(self.gpio_pin).split())
+        except OSError:
+            logger.warn('Not running in a Raspberry Pi environment or wiringpi is not installed. Continuing in simulation mode.')
+            self.simulate = True
+        else:
+            wiringpi2.wiringPiSetupSys()
         self.busy = False
         self.brew_time = brew_time
 
@@ -45,7 +54,7 @@ class RaspCoffeePot(Pot):
             flask.abort(409)
         self.busy = True
         gevent.spawn(self.brew_stop, self.brew_time)
-        wiringpi2.digitalWrite(self.gpio_pin, 1)
+        self.power_pot_on()
         return 'started brewing', 200
 
     def brew_stop(self, wait=0):
@@ -53,8 +62,18 @@ class RaspCoffeePot(Pot):
         if not self.busy:
             flask.abort(409)
         self.busy = False
-        wiringpi2.digitalWrite(self.gpio_pin, 0)
+        self.power_pot_off()
         return 'stopped brewing', 200
+
+    def power_pot_on(self):
+        logger.debug('Power pot on.')
+        if not self.simulate:
+            wiringpi2.digitalWrite(self.gpio_pin, 1)
+
+    def power_pot_off(self):
+        logger.debug('Power pot off.')
+        if not self.simulate:
+            wiringpi2.digitalWrite(self.gpio_pin, 0)
 
 
 def are_you_a_teapot():
