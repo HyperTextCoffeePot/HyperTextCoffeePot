@@ -29,6 +29,7 @@ class RaspCoffeePot(Pot):
     gpio_pin = None
     busy = None
     brew_time = None
+    stop_task = None
 
     def __init__(self, name, brew_time, pin):
         super(RaspCoffeePot, self).__init__(name)
@@ -45,6 +46,8 @@ class RaspCoffeePot(Pot):
 
     def brew(self):
         if flask.request.get_data().strip() == 'stop':
+            if self.stop_task:
+                self.stop_task.kill()
             return self.brew_stop()
         else:
             return self.brew_start()
@@ -53,12 +56,11 @@ class RaspCoffeePot(Pot):
         if self.busy:
             flask.abort(409)
         self.busy = True
-        gevent.spawn(self.brew_stop, self.brew_time)
+        self.stop_task = gevent.spawn_later(self.brew_time, self.brew_stop)
         self.power_pot_on()
         return 'started brewing', 200
 
-    def brew_stop(self, wait=0):
-        gevent.sleep(wait)
+    def brew_stop(self):
         if not self.busy:
             flask.abort(409)
         self.busy = False
