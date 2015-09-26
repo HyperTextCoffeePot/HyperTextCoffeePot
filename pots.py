@@ -30,6 +30,7 @@ class RaspCoffeePot(Pot):
     busy = None
     brew_time = None
     stop_task = None
+    simulate = None
 
     def __init__(self, name, brew_time, pin):
         super(RaspCoffeePot, self).__init__(name)
@@ -40,6 +41,7 @@ class RaspCoffeePot(Pot):
             logger.warn('Not running in a Raspberry Pi environment or wiringpi is not installed. Continuing in simulation mode.')
             self.simulate = True
         else:
+            self.simulate = False
             wiringpi2.wiringPiSetupSys()
         self.busy = False
         self.brew_time = brew_time
