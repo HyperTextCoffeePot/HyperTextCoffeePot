@@ -5,6 +5,7 @@ A real implementation of the Hyper Text Coffee Pot Control Protocol. Get a
 cheap coffee pot, a programmable power strip, and a Raspberry Pi and you'll
 have your own HTCPCP server.
 
+
 Goals
 -----
 
@@ -12,6 +13,7 @@ The goal of this project is to implement a complient HTCPCP server after the
 [HTCPCP][1] protocol.
 
 [1]: https://en.wikipedia.org/wiki/HTCPCP
+
 
 Design
 ------
@@ -23,24 +25,29 @@ Design of the Flask app (at time or writing) is nearly complete and trivially
 implemented. Implementation of the `coffeed` daemon is in the brainstorming
 phase. Please checkout the issues for more information.
 
-GPIO Library (RPi.GPIO)
------
 
 Installation
 ------------
 
-Installation instructions were stolen from this writeup: [GPIO Library][2]
+```shell
+apt-get install wiringpi
+pip install -r requirements.txt
+```
 
-1. Download the library ($ wget http://pypi.python.org/packages/source/R/RPi.GPIO/RPi.GPIO-0.1.0.tar.gz)
 
-2. Unarchive the tar ball ($ tar zxf RPi.GPIO-0.1.0.tar.gz)
-3. Install GPIO Library
+Run the server
+--------------
 
-    a. $ cd RPi.GPIO-0.1.0
-    
-    b. $ sudo python setup.py install
+```shell
+gunicorn --worker-class gevent server:app
+```
 
-[2]: http://openmicros.org/index.php/articles/94-ciseco-product-documentation/raspberry-pi/217-getting-started-with-raspberry-pi-gpio-and-python
+The server will be running on port 8000, you can use a command like this to make brew requests:
+
+```shell
+curl -X BREW http://localhost:8000/teapot
+```
+
 
 What to help?
 -------------
